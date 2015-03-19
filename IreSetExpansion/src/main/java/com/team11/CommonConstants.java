@@ -1,4 +1,4 @@
-package com.team11.IreSetExpansion;
+package com.team11;
 
 public interface CommonConstants {
 	

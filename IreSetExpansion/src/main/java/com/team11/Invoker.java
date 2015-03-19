@@ -1,9 +1,9 @@
-package com.team11.IreSetExpansion;
+package com.team11;
 
 import java.util.Set;
 
-import com.team11.IreSetExpansion.searchAPI.BingAPI;
-import com.team11.IreSetExpansion.searchAPI.GoogleAPI;
+import com.team11.searchAPI.BingAPI;
+import com.team11.searchAPI.GoogleAPI;
 
 public class Invoker {
 	public static void main(String[] args) {

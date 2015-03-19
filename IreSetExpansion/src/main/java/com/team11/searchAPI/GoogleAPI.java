@@ -1,4 +1,4 @@
-package com.team11.IreSetExpansion.searchAPI;
+package com.team11.searchAPI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.team11.IreSetExpansion.CommonConstants;
+import com.team11.CommonConstants;
 
 
 public class GoogleAPI implements CommonConstants{
