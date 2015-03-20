@@ -23,6 +23,16 @@ public class Invoker {
 		for(String temp : bingResult){
 			System.out.println(temp);
 		}
+		
+		System.out.println("Faroo *******************************");
+		int count=0;
+		FarooAPI obj = new FarooAPI();
+		Set<String> result = obj.SearchFaroo(query,totalrecords);
+		for(String temp : result){
+			count++;
+			System.out.println(temp);
+			if(count==totalrecords) break;
+		}
 
 	}
 }
