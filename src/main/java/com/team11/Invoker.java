@@ -26,9 +26,19 @@ public class Invoker {
 		
 		System.out.println("Faroo *******************************");
 		int count=0;
-		FarooAPI obj = new FarooAPI();
-		Set<String> result = obj.SearchFaroo(query,totalrecords);
-		for(String temp : result){
+		FarooAPI faroo = new FarooAPI();
+		Set<String> Farooresult = faroo.SearchFaroo(query,totalrecords);
+		for(String temp : Farooresult){
+			count++;
+			System.out.println(temp);
+			if(count==totalrecords) break;
+		}
+		
+		System.out.println("Yandex *******************************");
+		count=0;
+		YandexAPI yandex = new YandexAPI();
+		Set<String> Yandexresult = yandex.SearchYandex(query,totalrecords);
+		for(String temp : Yandexresult){
 			count++;
 			System.out.println(temp);
 			if(count==totalrecords) break;
