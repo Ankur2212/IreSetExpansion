@@ -44,7 +44,7 @@ public class Invoker {
 			if(count==totalrecords) break;
 		}
 
-		System.out.println("Yandex *******************************");
+		System.out.println("Twitter *******************************");
 		count=0;
 		TwitterAPI twitter = new TwitterAPI(query,totalrecords);
 		}
