@@ -4,10 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
@@ -15,28 +14,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.team11.CommonConstants;
+import com.team11.CommonUtilities.ListUtil;
+import com.team11.CommonUtilities.LogUtil;
+import com.team11.Parser.ListFinderHTML;
+import com.team11.Parser.WebList;
+import com.team11.Parser.WebPage;
 
 public class BingAPI implements CommonConstants {
 
-	/**
-	 * @param query
-	 * @param totalRecords
-	 * @return
-	 */
-	public Set<String> getDataFromBing(String query, int totalRecords) {
-		Set<String> result = new HashSet<String>();	
+	public static ArrayList<WebPage> bingSearch(ArrayList<String> seedList, String concept, int noOfResults, double overlapTolerance, String query)  {
+		ArrayList<WebPage> listPages = new ArrayList<WebPage>();
 		URL url;
 		HttpURLConnection conn = null;
 		BufferedReader br = null;
-		String accountKey=CommonConstants.ankurBingKey;
-
+		ListFinderHTML myfinder = new ListFinderHTML();
 		try {
 			query = query.replaceAll(" ", "%20");
-			byte[] accountKeyBytes = Base64.encodeBase64((accountKey + ":" + accountKey).getBytes());
+			byte[] accountKeyBytes = Base64.encodeBase64((CommonConstants.ankurBingKey + ":" + CommonConstants.ankurBingKey).getBytes());
 			String accountKeyEnc = new String(accountKeyBytes);
 
-			url = new URL("https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Web?Query=%27" + query + "%27&$top="+totalRecords+"&$format=json");
+			url = new URL("https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Web?Query=%27" + query + "%27&$top="+noOfResults+"&$format=json");
+
 			conn = (HttpURLConnection) url.openConnection();
+
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Basic " + accountKeyEnc);
 			br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
@@ -45,36 +45,33 @@ public class BingAPI implements CommonConstants {
 			while ((output = br.readLine()) != null) {
 				sb.append(output);
 			}
-			result=jsonParser(sb.toString());
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				br.close();
-			} catch (IOException e) {}
-			conn.disconnect();
-		}
-		return result;
-	}
+			JSONObject obj;
 
-	/**
-	 * @param json
-	 * @return
-	 * @throws JSONException
-	 */
-	private Set<String> jsonParser(String json) throws JSONException{
-		Set<String> result = new HashSet<String>();
-		JSONObject obj = new JSONObject(json);
-		JSONArray arr = obj.getJSONObject("d").getJSONArray("results");
-		for (int i = 0; i < arr.length(); i++){
-			String post_id = arr.getJSONObject(i).getString("Url");
-			result.add(post_id);
+			obj = new JSONObject(sb.toString());
+			JSONArray arr = obj.getJSONObject("d").getJSONArray("results");
+			for (int i = 0; i < arr.length(); i++){
+				String post_id = arr.getJSONObject(i).getString("Url");
+				String description=arr.getJSONObject(i).getString("Description");
+				String title=arr.getJSONObject(i).getString("Title");
+				myfinder.SetHTML(post_id);
+				LogUtil.log.info("aaa "+title+" "+ post_id+" "+description);
+				WebPage page = new WebPage(title, post_id,description);
+				ArrayList<String> webList= new ArrayList<String>();
+				while ((webList = myfinder.getNextList())!=null && webList.size()>0) {
+					if(ListUtil.getOverLap(webList,seedList)>=(seedList.size()*overlapTolerance)){
+						page.addList(new WebList(webList, myfinder.getHeader(), myfinder.getDescription()));
+					}
+				}
+				listPages.add(page);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return result;
+		return listPages;
 	}
 }
 

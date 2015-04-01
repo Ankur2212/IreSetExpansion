@@ -4,72 +4,74 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.team11.CommonConstants;
+import com.team11.CommonUtilities.ListUtil;
+import com.team11.CommonUtilities.LogUtil;
+import com.team11.Parser.ListFinderHTML;
+import com.team11.Parser.WebList;
+import com.team11.Parser.WebPage;
 
 
 public class GoogleAPI implements CommonConstants{
-	
-	/**
-	 * @param json
-	 * @return
-	 * @throws JSONException
-	 */
-	private Set<String> jsonParser(String json) throws JSONException{
-		Set<String> result = new HashSet<String>();
-		JSONObject obj = new JSONObject(json);
-		JSONArray arr = obj.getJSONArray("items");
-		for (int i = 0; i < arr.length(); i++){
-		    String post_id = arr.getJSONObject(i).getString("link");
-		    result.add(post_id);
-		}
-		return result;
-	}
-	
-	/**
-	 * @param query
-	 * @param totalRecords
-	 * @return
-	 */
-	public Set<String> getDataFromGoogle(String query, int totalRecords) {
-		Set<String> result = new HashSet<String>();	
+
+	public static ArrayList<WebPage> googleSearch(ArrayList<String> seedList,String concept, int noOfResults, double overlapTolerance,String query) {
+		ArrayList<WebPage> listPages = new ArrayList<WebPage>();
 		URL url;
 		HttpURLConnection conn = null;
 		BufferedReader br = null;
-		query = query.replaceAll(" ", "%20");
-		String accountKey=CommonConstants.ankurGoogleKey;
+		ListFinderHTML myfinder = new ListFinderHTML();
 		try {
-			url = new URL("https://www.googleapis.com/customsearch/v1?key="+accountKey+"&cx="+CommonConstants.ankurGoogleCx+"&q="+ query);
+			query = query.replaceAll(" ", "%20");
+			url = new URL("https://www.googleapis.com/customsearch/v1?key="+CommonConstants.ankurGoogleKey+"&cx="+CommonConstants.ankurGoogleCx+"&q="+ query);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
+
 			br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+			/*Reader reader = new InputStreamReader(url.openStream(), charset);
+			GoogleResults results = new Gson().fromJson(reader, GoogleResults.class);
+
+			for(Result r :results.getResponseData().getResults()){
+				//System.out.println(r);
+				urls.add(r.getUrl());
+			}*/
 			StringBuilder sb = new StringBuilder();
 			String output;
 			while ((output = br.readLine()) != null) {
 				sb.append(output);
 			}
-			result=jsonParser(sb.toString());
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}catch (IOException e) {
+			JSONObject obj;
+			
+			obj = new JSONObject(sb.toString());
+			JSONArray arr = obj.getJSONArray("items");
+			for (int i = 0; i < arr.length(); i++){
+				String post_id = arr.getJSONObject(i).getString("link");
+				String description=arr.getJSONObject(i).getString("snippet");
+				String title=arr.getJSONObject(i).getString("title");
+				myfinder.SetHTML(post_id);
+				LogUtil.log.info("aaa "+title+" "+ post_id+" "+description);
+				WebPage page = new WebPage(title, post_id,description);
+				ArrayList<String> webList= new ArrayList<String>();
+				while ((webList = myfinder.getNextList())!=null && webList.size()>0) {
+					if(ListUtil.getOverLap(webList,seedList)>=(seedList.size()*overlapTolerance)){
+						page.addList(new WebList(webList, myfinder.getHeader(), myfinder.getDescription()));
+					}
+				}
+				listPages.add(page);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JSONException e) {
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			try {
-				br.close();
-			} catch (IOException e) {}
-			conn.disconnect();
 		}
-		
-		return result;
+		return listPages;
 	}
 }

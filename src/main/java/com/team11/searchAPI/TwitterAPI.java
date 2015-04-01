@@ -1,5 +1,5 @@
 package com.team11.searchAPI;
-package twitter4j.examples.search;
+
 import twitter4j.*;
 import java.util.List;
 

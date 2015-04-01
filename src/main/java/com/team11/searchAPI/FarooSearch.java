@@ -6,14 +6,18 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.team11.CommonConstants;
+
 
 public class FarooSearch {
-	public set<String> SearchFaroo(String query,int records){
+	public Set<String> SearchFaroo(String query,int records){
 		int starting=1;
 		Set<String> result=new HashSet<String>();
 		Set<String> finalresult=new HashSet<String>();
