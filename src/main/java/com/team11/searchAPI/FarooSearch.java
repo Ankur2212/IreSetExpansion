@@ -1,4 +1,4 @@
-package com.team11.searchAPI;
+package src.main.java.com.team11.searchAPI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.team11.CommonConstants;
+import src.main.java.com.team11.CommonConstants;
 
 
 public class FarooSearch {

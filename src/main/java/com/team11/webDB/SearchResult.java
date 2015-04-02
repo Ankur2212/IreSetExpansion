@@ -1,8 +1,10 @@
-package com.team11.webDB;
+package src.main.java.com.team11.webDB;
 
 import java.util.ArrayList;
 
-import com.team11.Parser.WebPage;
+import src.main.java.com.team11.Parser.*;
+
+
 
 public class SearchResult {
 	String query;

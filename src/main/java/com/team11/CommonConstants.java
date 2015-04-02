@@ -1,4 +1,4 @@
-package com.team11;
+package src.main.java.com.team11;
 
 public interface CommonConstants {
 	

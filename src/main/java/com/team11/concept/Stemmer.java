@@ -1,4 +1,4 @@
-package com.team11.concept;
+package src.main.java.com.team11.concept;
 
 /**
   * Stemmer, implementing the Porter Stemming Algorithm

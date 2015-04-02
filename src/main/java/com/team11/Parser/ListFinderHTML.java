@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-package com.team11.Parser;
+package src.main.java.com.team11.Parser;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.team11.webDB.SearchProvider;
+import src.main.java.com.team11.webDB.SearchProvider;
 
 /**
  *

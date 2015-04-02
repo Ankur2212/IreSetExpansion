@@ -1,4 +1,4 @@
-package com.team11.CommonUtilities;
+package src.main.java.com.team11.CommonUtilities;
 
 import java.util.Comparator;
 import java.util.HashMap;

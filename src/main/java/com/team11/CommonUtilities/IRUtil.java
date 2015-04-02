@@ -1,4 +1,4 @@
-package com.team11.CommonUtilities;
+package src.main.java.com.team11.CommonUtilities;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,8 +17,8 @@ import java.util.Set;
 
 import org.jsoup.Jsoup;
 
-import com.team11.webDB.SearchProvider;
-import com.team11.concept.Stemmer;
+import src.main.java.com.team11.webDB.SearchProvider;
+import src.main.java.com.team11.concept.Stemmer;
 
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;

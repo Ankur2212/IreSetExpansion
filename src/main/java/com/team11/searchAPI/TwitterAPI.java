@@ -1,6 +1,5 @@
-package com.team11.searchAPI;
+package src.main.java.com.team11.searchAPI;
 
-import twitter4j.*;
 import java.util.List;
 
 public class TwitterAPI {

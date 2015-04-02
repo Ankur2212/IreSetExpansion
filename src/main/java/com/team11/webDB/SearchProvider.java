@@ -1,4 +1,4 @@
-package com.team11.webDB;
+package src.main.java.com.team11.webDB;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,12 +8,12 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import com.team11.CommonConstants;
-import com.team11.CommonUtilities.LogUtil;
-import com.team11.searchAPI.BingAPI;
-import com.team11.searchAPI.GoogleAPI;
-import com.team11.webDB.SearchResult;
-import com.team11.Parser.WebPage;
+import src.main.java.com.team11.CommonConstants;
+import src.main.java.com.team11.CommonUtilities.LogUtil;
+import src.main.java.com.team11.searchAPI.BingAPI;
+import src.main.java.com.team11.searchAPI.GoogleAPI;
+import src.main.java.com.team11.webDB.SearchResult;
+import src.main.java.com.team11.Parser.WebPage;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.mongodb.BasicDBObject;

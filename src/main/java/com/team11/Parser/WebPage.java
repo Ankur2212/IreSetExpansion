@@ -1,4 +1,4 @@
-package com.team11.Parser;
+package src.main.java.com.team11.Parser;
 
 import java.util.ArrayList;
 

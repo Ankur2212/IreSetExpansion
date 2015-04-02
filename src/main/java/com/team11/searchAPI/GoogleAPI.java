@@ -1,4 +1,4 @@
-package com.team11.searchAPI;
+package src.main.java.com.team11.searchAPI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +11,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.team11.CommonConstants;
-import com.team11.CommonUtilities.ListUtil;
-import com.team11.CommonUtilities.LogUtil;
-import com.team11.Parser.ListFinderHTML;
-import com.team11.Parser.WebList;
-import com.team11.Parser.WebPage;
+import src.main.java.com.team11.CommonConstants;
+import src.main.java.com.team11.CommonUtilities.ListUtil;
+import src.main.java.com.team11.CommonUtilities.LogUtil;
+import src.main.java.com.team11.Parser.ListFinderHTML;
+import src.main.java.com.team11.Parser.WebList;
+import src.main.java.com.team11.Parser.WebPage;
 
 
 public class GoogleAPI implements CommonConstants{

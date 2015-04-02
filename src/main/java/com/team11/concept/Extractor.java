@@ -1,4 +1,4 @@
-package com.team11.concept;
+package src.main.java.com.team11.concept;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,11 +9,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
-import com.team11.CommonUtilities.IRUtil;
-import com.team11.CommonUtilities.LogUtil;
-import com.team11.webDB.SearchProvider;
-import com.team11.Parser.WebList;
-import com.team11.Parser.WebPage;
+import src.main.java.com.team11.CommonUtilities.IRUtil;
+import src.main.java.com.team11.CommonUtilities.LogUtil;
+import src.main.java.com.team11.webDB.SearchProvider;
+import src.main.java.com.team11.Parser.WebList;
+import src.main.java.com.team11.Parser.WebPage;
 
 public class Extractor {
 	static HashMap<String, Integer> freqMap = new HashMap<String, Integer>();

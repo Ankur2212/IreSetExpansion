@@ -1,4 +1,4 @@
-package com.team11.CommonUtilities;
+package src.main.java.com.team11.CommonUtilities;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import com.team11.Invoker;
+import src.main.java.com.team11.Invoker;
 
 public class LogUtil {
 	public final static Logger log = Logger.getLogger(Invoker.class.getName()); 

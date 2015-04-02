@@ -1,4 +1,4 @@
-package com.team11.concept;
+package src.main.java.com.team11.concept;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,12 +7,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import com.team11.CommonUtilities.IRUtil;
-import com.team11.CommonUtilities.LogUtil;
-import com.team11.CommonUtilities.MapUtil;
-import com.team11.webDB.SearchProvider;
-import com.team11.Parser.WebList;
-import com.team11.Parser.WebPage;
+import src.main.java.com.team11.CommonUtilities.IRUtil;
+import src.main.java.com.team11.CommonUtilities.LogUtil;
+import src.main.java.com.team11.CommonUtilities.MapUtil;
+import src.main.java.com.team11.webDB.SearchProvider;
+import src.main.java.com.team11.Parser.WebList;
+import src.main.java.com.team11.Parser.WebPage;
 
 public class Seed {
 	private static final double VARIANCE = 0.20;

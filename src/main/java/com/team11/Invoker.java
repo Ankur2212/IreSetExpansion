@@ -1,4 +1,4 @@
-package com.team11;
+package src.main.java.com.team11;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.team11.CommonUtilities.LogUtil;
-import com.team11.concept.Seed;
+import src.main.java.com.team11.CommonUtilities.LogUtil;
+import src.main.java.com.team11.concept.Seed;
 
 public class Invoker {
 	/**
