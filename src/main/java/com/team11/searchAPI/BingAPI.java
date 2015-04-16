@@ -13,11 +13,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import com.team11.CommonConstants;
 import com.team11.CommonUtilities.LogUtil;
 import com.team11.Parser.ListFinderHTML;
 import com.team11.Parser.WebList;
 import com.team11.Parser.WebPage;
+
 
 public class BingAPI implements CommonConstants {
 

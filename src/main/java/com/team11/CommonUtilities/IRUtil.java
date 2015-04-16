@@ -10,18 +10,10 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.jsoup.Jsoup;
-
-import com.team11.webDB.SearchProvider;
 import com.team11.concept.Stemmer;
 
-import de.l3s.boilerpipe.BoilerpipeProcessingException;
-import de.l3s.boilerpipe.extractors.ArticleExtractor;
 
 public class IRUtil {
 	private static int totalDocs=0;
