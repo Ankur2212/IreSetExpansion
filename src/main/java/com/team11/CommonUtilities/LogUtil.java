@@ -1,3 +1,10 @@
+/*
+Utility Class for maintaining the log file
+in order to track the code progress
+
+*/
+
+
 package com.team11.CommonUtilities;
 
 import java.io.IOException;
@@ -15,7 +22,7 @@ public class LogUtil {
 		log.setLevel(Level.INFO);
 		FileHandler temp = null;
 		try {
-			temp = new FileHandler("SetExpansion.log");
+			temp = new FileHandler("SetExpansion.log");    // File for storing the logs
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
