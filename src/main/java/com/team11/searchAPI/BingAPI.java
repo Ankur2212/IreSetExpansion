@@ -1,3 +1,5 @@
+/* Class for the Bing Search engine API  */
+
 package com.team11.searchAPI;
 
 import java.io.BufferedReader;
@@ -52,7 +54,7 @@ public class BingAPI implements CommonConstants {
 			JSONArray arr = obj.getJSONObject("d").getJSONArray("results");
 			for (int i = 0; i < arr.length(); i++){
 				String post_id = arr.getJSONObject(i).getString("Url");
-				String description=arr.getJSONObject(i).getString("Description");
+				String description=arr.getJSONObject(i).getString("Description");		// Obtain all the urls for the given search query
 				String title=arr.getJSONObject(i).getString("Title");
 				myfinder.SetHTML(post_id);
 				LogUtil.log.info("aaa "+title+" "+ post_id+" "+description);

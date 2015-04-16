@@ -1,3 +1,5 @@
+/* Class for yandex search engine API */
+
 package com.team11.searchAPI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,10 +33,10 @@ public class YandexAPI implements CommonConstants{
 		Set<String> result=new HashSet<String>();
 		Set<String> finalresult=new HashSet<String>();
 		URL url;
-		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.iiit.ac.in", 8080));
+		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.iiit.ac.in", 8080));  // remove if not under a proxy
 		HttpURLConnection conn=null;
 		BufferedReader br=null;
-		String YandexKey=CommonConstants.arshYandexKey;
+		String YandexKey=CommonConstants.arshYandexKey;        // yandex search engine API key
 		try{
 			while(starting<records){
 				String start=Integer.toString(starting);
@@ -50,7 +52,7 @@ public class YandexAPI implements CommonConstants{
 					Node nNode = nList.item(temp);
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						 Element eElement = (Element) nNode;
-						 String resp=eElement.getElementsByTagName("url").item(0).getTextContent();
+						 String resp=eElement.getElementsByTagName("url").item(0).getTextContent();   // obtain all the urls for a given query
 						 finalresult.add(resp);
 					}
 				}

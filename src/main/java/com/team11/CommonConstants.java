@@ -1,3 +1,5 @@
+/* This contains all the keys needed for querying a search engine API */
+
 package com.team11;
 
 public interface CommonConstants {

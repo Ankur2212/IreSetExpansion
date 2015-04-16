@@ -1,3 +1,5 @@
+/* Class for the Faroo Search API	*/
+
 package com.team11.searchAPI;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,10 +23,10 @@ public class FarooSearch {
 		Set<String> result=new HashSet<String>();
 		Set<String> finalresult=new HashSet<String>();
 		URL url;
-		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.iiit.ac.in", 8080));
+		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.iiit.ac.in", 8080));   // remove if not under a proxy
 		HttpURLConnection conn=null;
 		BufferedReader br=null;
-		String FarooKey=CommonConstants.arshFarooKey;
+		String FarooKey=CommonConstants.arshFarooKey;		// key for faroo API
 		try{
 			while(starting<records){
 				String start=Integer.toString(starting);
@@ -35,9 +37,9 @@ public class FarooSearch {
 				br=new BufferedReader(new InputStreamReader((conn.getInputStream())));
 				StringBuilder sb=new StringBuilder();
 				String line;
-				while((line=br.readLine())!=null)
+				while((line=br.readLine())!=null)				
 					sb.append(line);
-				result=jsonParser(sb.toString());
+				result=jsonParser(sb.toString());				// Obtain all the URLs
 				if(result.size()==0) break;
 				for(String local:result) finalresult.add(local);
 				starting=finalresult.size();
@@ -50,7 +52,7 @@ public class FarooSearch {
 	public Set<String> jsonParser(String s) throws JSONException{
 		Set<String> output=new HashSet<String>();
 		JSONObject obj=new JSONObject(s);
-		JSONArray arr=obj.getJSONArray("results");
+		JSONArray arr=obj.getJSONArray("results");					// parse the json for all the urls
 		for(int i=0;i<arr.length();i++){
 			String geturl=arr.getJSONObject(i).getString("url");
 			output.add(geturl);

@@ -1,3 +1,5 @@
+/* Class for expanding the given set of related words  */
+
 package com.team11.concept;
 
 import java.io.File;
@@ -30,9 +32,9 @@ public class Seed {
 		do {
 			
 			StringBuilder tempHtml = new StringBuilder();
-			ArrayList<WebPage> listpages = SearchProvider.getSearchResults(seedList, null, noOfResults, 1, searchEngine); 
+			ArrayList<WebPage> listpages = SearchProvider.getSearchResults(seedList, null, noOfResults, 1, searchEngine);  // Query the given seed list in the required search engine
 			for(WebPage wp : listpages){
-				tempHtml.append(sp.getHtml(wp.getUrl()));
+				tempHtml.append(sp.getHtml(wp.getUrl()));       // Get HTML page of all the returned webpages
 			}
 			LogUtil.log.info("Input Seed : "+tempSeed.toString());
 			String newSeed = getNewSeed(tempSeed.toString(),tempHtml.toString(),seedList);
@@ -49,20 +51,20 @@ public class Seed {
 		Word2Vec vec = SerializationUtils.readObject(new File("vec2.ser"));
 		double weightage= 0.0;
 		String newSeed = "";
-		Tokenizer tf = tokenizer.create(pageHtml);
+		Tokenizer tf = tokenizer.create(pageHtml);   // tokenize the overall HTML into set of words
 		while(tf.hasMoreTokens()){
-			String htmlToken = tf.nextToken().toLowerCase();
-			if(IRUtil.isValidWord(htmlToken)){
-				htmlToken=IRUtil.getStemmedWord(htmlToken);
-				if (!seedList.contains(htmlToken)){
+			String htmlToken = tf.nextToken().toLowerCase();    // convert each word to lower case
+			if(IRUtil.isValidWord(htmlToken)){					// Check for stop word
+				htmlToken=IRUtil.getStemmedWord(htmlToken);		// Perform Stemming
+				if (!seedList.contains(htmlToken)){				// Check if word is present in current seed list
 					double temp = vec.similarity(oldSeedString, htmlToken);
 					if (weightage< temp ){
-						newSeed = htmlToken;
+						newSeed = htmlToken;					// finding a word which is not already in the seed list and has the highest similarity
 						weightage = temp;
 					}
 				}
 			}
 		}
-		return newSeed;
+		return newSeed;										// return the new seed
 	}
 }

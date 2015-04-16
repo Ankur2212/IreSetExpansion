@@ -1,3 +1,7 @@
+/*
+	Class for structuring all the webpages obtained from the search engine
+*/
+
 package com.team11.webDB;
 
 import java.util.ArrayList;

@@ -1,3 +1,7 @@
+/* 
+	Class for implementing the Google search engine API
+*/
+
 package com.team11.searchAPI;
 
 import java.io.BufferedReader;
@@ -52,7 +56,7 @@ public class GoogleAPI implements CommonConstants{
 			JSONArray arr = obj.getJSONArray("items");
 			for (int i = 0; i < arr.length(); i++){
 				String post_id = arr.getJSONObject(i).getString("link");
-				String description=arr.getJSONObject(i).getString("snippet");
+				String description=arr.getJSONObject(i).getString("snippet");    // Obtain all the URLs for a given search query
 				String title=arr.getJSONObject(i).getString("title");
 				myfinder.SetHTML(post_id);
 				LogUtil.log.info("aaa "+title+" "+ post_id+" "+description);

@@ -1,3 +1,7 @@
+/* 
+	Class for obtaining all the search results from the given search engine
+*/
+
 package com.team11.webDB;
 
 import java.io.BufferedReader;
@@ -34,15 +38,15 @@ public class SearchProvider {
 	static {
 		try{
 			System.setProperty("https.proxyHost", "proxy.iiit.ac.in");
-			System.setProperty("https.proxyPort", "8080");
+			System.setProperty("https.proxyPort", "8080");						// Remove these lines if not under a proxy
 
 			mongoClient = new MongoClient();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		db = mongoClient.getDB(CommonConstants.BING_SEARCH_ENGINE);
-		webCollection= db.getCollection("urlCollection");
-		searchCollection = db.getCollection("searchCollection");
+		webCollection= db.getCollection("urlCollection");					// Mongo database for storing all the URLs obtained
+		searchCollection = db.getCollection("searchCollection");			// Mongo database for storing all the search queries
 	}
 
 	public static ArrayList<WebPage> getSearchResults(ArrayList<String> seedList, String concept, int noOfResults, double overlapTolerance, String searchEngine){
@@ -57,12 +61,12 @@ public class SearchProvider {
 			cur.close();
 			return result.getResults();
 		}else{
-			ArrayList<WebPage> result = search(seedList, noOfResults, overlapTolerance, searchEngine);
+			ArrayList<WebPage> result = search(seedList, noOfResults, overlapTolerance, searchEngine);   // query the search engine
 			LogUtil.log.info("Going to Search Engine : " + searchEngine +" for " + query + " got "+ result.size() + " results");
 			SearchResult sr = new SearchResult(query,result);
 			DBObject obj = (DBObject)JSON.parse(gson.toJson(sr));
 			searchCollection.save(obj);
-			return result;
+			return result;				// return all the webpages for the given query
 		}
 
 	}
@@ -70,7 +74,7 @@ public class SearchProvider {
 	private static ArrayList<WebPage> search(ArrayList<String> seedList, int noOfResults, double overlapTolerance, String searchEngine)  {
 		String query=constructQuery(seedList);
 		ArrayList<WebPage> pageLists = new ArrayList<>();
-		switch(searchEngine){
+		switch(searchEngine){											// query the required search engine
 		case CommonConstants.BING_SEARCH_ENGINE:
 			pageLists= BingAPI.bingSearch(seedList, noOfResults, overlapTolerance, query);
 			break;
@@ -105,7 +109,7 @@ public class SearchProvider {
 	private static String constructQuery(ArrayList<String> seedList) {
 		String ret = new String();
 		for(String s : seedList){
-			ret = ret + " " + s;
+			ret = ret + " " + s;				// construct the query from the given the seed list
 		}
 		return ret;
 	}	
@@ -115,7 +119,7 @@ public class SearchProvider {
 		query.put("url", url);
 		DBCursor cur = webCollection.find(query);
 
-		if(cur.count()>0){
+		if(cur.count()>0){								// get the page HTML from the given webpage
 			return (String)cur.next().get("html");
 		}else{
 			String html = getHtml(url);
@@ -143,7 +147,7 @@ public class SearchProvider {
 	}
 
 	private void insert(String url, String html){
-		BasicDBObject obj = new BasicDBObject("url",url).append("html", html);
+		BasicDBObject obj = new BasicDBObject("url",url).append("html", html);  // Insert the given URL in the database
 		webCollection.insert(obj);
 	}	
 }

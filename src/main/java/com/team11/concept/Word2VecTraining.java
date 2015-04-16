@@ -1,3 +1,6 @@
+/* Class for training the word2vec */
+
+
 package com.team11.concept;
 
 import java.io.File;
@@ -19,16 +22,16 @@ public class Word2VecTraining {
 	public final static String VEC_PATH = "vec2.ser";
 
 	public Word2VecTraining() throws Exception {
-		this.iter = new LineSentenceIterator(new File("TrainingDataSet.txt"));
+		this.iter = new LineSentenceIterator(new File("TrainingDataSet.txt"));   // Training Dataset
 	}
 
 	public void word2VecTraining() throws Exception {
 		if(vec == null && !new File(VEC_PATH).exists()) {
 			System.out.println("!!!!!!!!!!!!!!!!!");
-			iter.setPreProcessor(new SentencePreProcessor() {
+			iter.setPreProcessor(new SentencePreProcessor() {				// Process the given dataset line by line
 				@Override
 				public String preProcess(String sentence) {
-					return sentence.toLowerCase();
+					return sentence.toLowerCase();							
 				}
 			});
 
@@ -38,7 +41,7 @@ public class Word2VecTraining {
 				@Override
 				public String preProcess(String token) {
 					token = token.toLowerCase();
-					String base = preProcessor.preProcess(token);
+					String base = preProcessor.preProcess(token);		// obtain the tokenized words
 					base = base.replaceAll("\\d", "d");
 					if (base.endsWith("ly") || base.endsWith("ing"))
 						System.out.println();
@@ -49,8 +52,8 @@ public class Word2VecTraining {
 			int layerSize = 300;
 			vec = new Word2Vec.Builder().sampling(1e-5)
 					.minWordFrequency(5).batchSize(1000).useAdaGrad(false).layerSize(layerSize)
-					.iterations(3).learningRate(0.025).minLearningRate(1e-2).negativeSample(10)
-					.iterate(iter).tokenizerFactory(t).build();
+					.iterations(3).learningRate(0.025).minLearningRate(1e-2).negativeSample(10)			
+					.iterate(iter).tokenizerFactory(t).build();						// set the parameters for the word2vec model
 
 			vec.fit();
 			SerializationUtils.saveObject(vec, new File(VEC_PATH));

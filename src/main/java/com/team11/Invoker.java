@@ -1,3 +1,6 @@
+
+                                        /* Main Class which starts the program */
+
 package com.team11;
 
 import java.io.BufferedReader;
@@ -20,9 +23,9 @@ public class Invoker {
 	 */
 	public static void main(String[] args) throws IOException {
 		//// INPUTS
-		String inputFilePath=args[0];
-		String outputFileName=args[1];
-		int noOfResults = Integer.parseInt(args[2]);
+		String inputFilePath=args[0];						// Provide input file path containing set of related words
+		String outputFileName=args[1];						// Provide output file path which will contain the expanded set
+		int noOfResults = Integer.parseInt(args[2]);		// No of results for the search engine
 		String searchEngine=CommonConstants.BING_SEARCH_ENGINE;
 		//String searchEngine=CommonConstants.GOOGLE_SEARCH_ENGINE;
 
@@ -39,7 +42,7 @@ public class Invoker {
 				LogUtil.log.info("======= "+line+" =======");
 				seedList.addAll(Arrays.asList(line.toLowerCase().split(" ")));	
 				try {
-					new Word2VecTraining().word2VecTraining();
+					new Word2VecTraining().word2VecTraining();								// Training the Word2Vec Model
 					ArrayList<String> list = seed.expandSeed(seedList,noOfResults,searchEngine);
 					StringBuilder sb = new StringBuilder();
 					for (String s : list){
