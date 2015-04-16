@@ -1,3 +1,6 @@
+/*
+	Organizes a webpage 
+*/
 package com.team11.Parser;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class WebPage {
 
 	public WebPage(String title, String url, String snippest, ArrayList<WebList> allList) {
 		this.title = title;
-		this.url = url;
+		this.url = url;					// set the title, url, lists, content
 		this.snippest=snippest;
 		this.allList = allList;
 	}

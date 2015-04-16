@@ -1,3 +1,9 @@
+/*
+	Contains all the lists in a given webpage
+	The lists can be unordered,ordered,table etc
+*/
+
+
 package com.team11.Parser;
 
 import java.util.ArrayList;

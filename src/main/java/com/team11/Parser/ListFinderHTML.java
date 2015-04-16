@@ -13,7 +13,7 @@ import com.team11.webDB.SearchProvider;
 
 /**
  *
- * @author Avinash
+ * 			Parse all the list in the given page HTML
  */
 public class ListFinderHTML {
 
@@ -30,8 +30,8 @@ public class ListFinderHTML {
 		myHTML ="";        
 		currentpos = -1;
 		prevtable= false;
-		SearchProvider sp = new SearchProvider();
-		myHTML = sp.getPageHtml(myurl).toLowerCase();
+		SearchProvider sp = new SearchProvider();			
+		myHTML = sp.getPageHtml(myurl).toLowerCase();		// store the page HTML in a string
 
 		currentpos = 0;
 		SetTitle();        
@@ -57,7 +57,7 @@ public class ListFinderHTML {
 
 		indextable = myHTML.indexOf("<table", currentpos);
 		indexol = myHTML.indexOf("<ol", currentpos);
-		indexul = myHTML.indexOf("<ul", currentpos);
+		indexul = myHTML.indexOf("<ul", currentpos);			// Check for a list
 		indexdl = myHTML.indexOf("<dl", currentpos);
 		indexselect = myHTML.indexOf("<select", currentpos);
 
@@ -108,7 +108,7 @@ public class ListFinderHTML {
 		}
 
 
-		return ProcessAndSend(mylist);
+		return ProcessAndSend(mylist);			// Parse the content of the list obtained
 	}                   
 
 	public String getHeader()
@@ -129,7 +129,7 @@ public class ListFinderHTML {
 	ArrayList<ArrayList<String>> tablelistlist;
 
 
-	private void HandleTable() {
+	private void HandleTable() {				// Process the contents of the table
 
 		mylist = new ArrayList<String>();
 		int endpos = myHTML.indexOf("</table>", currentpos);
@@ -285,7 +285,7 @@ public class ListFinderHTML {
 		Matcher match ;
 
 
-		match = pattern1.matcher(str);        
+		match = pattern1.matcher(str);        	// Remove all the unnecessary words like the stop words
 
 		if (match.find())
 			str = match.group(1);
@@ -316,7 +316,7 @@ public class ListFinderHTML {
 	}
 
 
-	private void HandleSelect()
+	private void HandleSelect()    // Parse the select list
 	{
 		mylist = new ArrayList<String>();
 		int endpos = myHTML.indexOf("</select>", currentpos);
@@ -340,7 +340,7 @@ public class ListFinderHTML {
 	}
 
 
-	private void HandleOl() {
+	private void HandleOl() {	// parse the ordered list
 
 		mylist = new ArrayList<String>();
 		int endpos = myHTML.indexOf("</ol>", currentpos);
@@ -364,7 +364,7 @@ public class ListFinderHTML {
 
 	}
 
-	private void HandleUl() {
+	private void HandleUl() {			// parse the unordered list
 
 		mylist = new ArrayList<String>();
 		int endpos = myHTML.indexOf("</ul>", currentpos);
