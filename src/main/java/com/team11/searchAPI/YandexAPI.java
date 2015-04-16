@@ -20,6 +20,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.team11.CommonConstants;
+
 
 public class YandexAPI implements CommonConstants{
 	public Set<String> SearchYandex(String query,int records){

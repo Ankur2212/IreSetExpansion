@@ -51,79 +51,6 @@ public class IRUtil {
 		}
 	}
 
-	public static double getIdf(HashMap<String, Set<String>> docMap, Entry<String, Integer> e) {
-		Set<String> uniqDocs = new HashSet<String>();
-		if(totalDocs  == 0){
-			for(Entry<String, Set<String>> en : docMap.entrySet()){
-				uniqDocs.addAll(en.getValue());
-			}
-			totalDocs = uniqDocs.size();
-		}
-		double idf = Math.log(totalDocs/docMap.get(e.getKey()).size());
-
-		//return tf*docMap.get(e.getKey()).size();
-		return idf;
-	}
-
-	public static String clean() {
-		return null;
-	}
-
-	public static double compareDocs(String url1, String url2) {
-		SearchProvider sp = new SearchProvider();
-		String text1 = null,text2 = null;
-		try {
-			//text1 = ArticleExtractor.INSTANCE.getText(new URL(url1));
-			text1 = ArticleExtractor.INSTANCE.getText(sp.getPageHtml(url1));
-			//System.out.println(url2);
-			text2 = ArticleExtractor.INSTANCE.getText(sp.getPageHtml(url2));
-		}catch (BoilerpipeProcessingException e) {
-			LogUtil.log.fine(e.toString());
-		}
-		
-		if(text1==null || text2==null){
-			return 0;
-		}
-		text1=text1.toLowerCase();
-		text2=text2.toLowerCase();
-		Set<String> uniqText1 = new HashSet<String>(Arrays.asList(text1.split(IRUtil.Token)));
-		Set<String> uniqText2 = new HashSet<String>(Arrays.asList(text2.split(IRUtil.Token)));
-
-		double intersection=ListUtil.getOverLapWithoutStopWords(uniqText1, uniqText2);
-		//return 100.0*intersection/(double)Math.log((uniqText1.size()+uniqText2.size()));
-		return intersection;///(double)Math.log((uniqText1.size()+uniqText2.size()));
-	}
-	
-	public static double compareDocsWithSeed(String url1, String url2, ArrayList<String> seedList) {
-		SearchProvider sp = new SearchProvider();
-		String text1 = null,text2 = null;
-		/*try {
-			//text1 = ArticleExtractor.INSTANCE.getText(new URL(url1));
-			text1 = ArticleExtractor.INSTANCE.getText(Web.getPageHtml(url1));
-			text2 = ArticleExtractor.INSTANCE.getText(Web.getPageHtml(url2));
-		}catch (BoilerpipeProcessingException e) {
-			LogUtil.log.fine(e.toString());
-		}*/
-		text1 = Jsoup.parse(sp.getPageHtml(url1)).text().toLowerCase();
-		text2 = Jsoup.parse(sp.getPageHtml(url2)).text().toLowerCase();
-		
-		if(text1==null || text2==null){
-			return 0;
-		}
-		
-		double intersection=0;
-		for(String seed : seedList){
-			if(text1.contains(seed) && text2.contains(seed)){  // ANd or OR ?
-				Set<String> uniqText1 = new HashSet<String>(Arrays.asList(text1.split(IRUtil.Token)));
-				Set<String> uniqText2 = new HashSet<String>(Arrays.asList(text2.split(IRUtil.Token)));
-				intersection=ListUtil.getOverLapWithoutStopWords(uniqText1, uniqText2);
-				return intersection;
-			}	
-		}
-		
-				//return 100.0*intersection/(double)Math.log((uniqText1.size()+uniqText2.size()));
-		return intersection;///(double)Math.log((uniqText1.size()+uniqText2.size()));
-	}
 
 	public static boolean isValidWord(String smallWord) {
 		//Matcher matcher = nonWordPattern.matcher(smallWord);
@@ -159,7 +86,7 @@ public class IRUtil {
 		return tokens;
 	}
 
-	public String getStemmedWord(String word){
+	public static String getStemmedWord(String word){
 		Stemmer stemmer = new Stemmer();
 		stemmer.add(word.toLowerCase().toCharArray(), word.length());
 		stemmer.stem();

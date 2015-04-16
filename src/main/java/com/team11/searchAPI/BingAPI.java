@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.team11.CommonConstants;
-import com.team11.CommonUtilities.ListUtil;
 import com.team11.CommonUtilities.LogUtil;
 import com.team11.Parser.ListFinderHTML;
 import com.team11.Parser.WebList;
@@ -22,7 +21,7 @@ import com.team11.Parser.WebPage;
 
 public class BingAPI implements CommonConstants {
 
-	public static ArrayList<WebPage> bingSearch(ArrayList<String> seedList, String concept, int noOfResults, double overlapTolerance, String query)  {
+	public static ArrayList<WebPage> bingSearch(ArrayList<String> seedList, int noOfResults, double overlapTolerance, String query)  {
 		ArrayList<WebPage> listPages = new ArrayList<WebPage>();
 		URL url;
 		HttpURLConnection conn = null;
@@ -56,12 +55,6 @@ public class BingAPI implements CommonConstants {
 				myfinder.SetHTML(post_id);
 				LogUtil.log.info("aaa "+title+" "+ post_id+" "+description);
 				WebPage page = new WebPage(title, post_id,description);
-				ArrayList<String> webList= new ArrayList<String>();
-				while ((webList = myfinder.getNextList())!=null && webList.size()>0) {
-					if(ListUtil.getOverLap(webList,seedList)>=(seedList.size()*overlapTolerance)){
-						page.addList(new WebList(webList, myfinder.getHeader(), myfinder.getDescription()));
-					}
-				}
 				listPages.add(page);
 			}
 		} catch (IOException e) {
